@@ -1,6 +1,6 @@
 import {Injectable,} from '@angular/core'
 import { HttpClient } from '@angular/common/http';
-import {AccountAPIs} from '../../base/apis/account.api'
+import {AccountAPIs} from '../base/apis/account.api'
 import { Observable } from 'rxjs';
 
 @Injectable()

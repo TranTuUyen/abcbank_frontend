@@ -2,13 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { JwtModule } from '@auth0/angular-jwt';
 import { JWTService } from "../base/services/jwt_auth/jwt.service"
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatCheckboxModule } from '@angular/material';
-
+import { MatButtonModule, MatInputModule, MatCheckboxModule, MatTableModule, MatSortModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +14,7 @@ import { LoginComponent } from '../authentication/login/login.component'
 import { AccountComponent } from '../accounts/account_config/account.component'
 
 import { LoginService } from '../authentication/login/login.service'
-import {AccountService} from '../accounts/account_config/account.service'
+import {AccountService} from '../services/account.service'
 import { AuthGuard } from '../_guards/guards';
 import { JwtInterceptor } from '../base/services/jwt_auth/jwt.interceptor';
 
@@ -36,6 +34,8 @@ import { JwtInterceptor } from '../base/services/jwt_auth/jwt.interceptor';
     MatButtonModule,
     MatInputModule,
     MatCheckboxModule,
+    MatTableModule,
+    MatSortModule,
     AppRoutingModule,
     // JwtModule.forRoot({
     //   config: {

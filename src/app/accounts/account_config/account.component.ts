@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { FormControl, Validators } from "@angular/forms";
-import { AccountService } from './account.service';
+import { AccountService } from './../../services/account.service';
 import { Account } from 'src/app/model/account.model';
 
 @Component({
@@ -11,16 +11,24 @@ import { Account } from 'src/app/model/account.model';
 })
 
 export class AccountComponent {
-	constructor(private accountService: AccountService) {}
+	isOpenCreateFrom: boolean = false;
+	accountList: Account[] = [];
+	displayedColumns: string[] = ['account_number', 'firstname', 'lastname', 'balance', 'email', 'age', 'gender', 'employer', 'address', 'city', 'state'];
+
+	constructor(private accountService: AccountService) { }
 
 	ngOnInit() {
 		this.accountService.getAccounts()
-		.subscribe((res: Account[]) => {
-			console.log(res)
-		  },
-		  err => {
-			console.log("Error occured");
-		  }
-		);
+			.subscribe((res: Account[]) => {
+				this.accountList = res
+			},
+				err => {
+					console.log("Error occured");
+				}
+			);
+	}
+
+	onOpenCreateForm() {
+		this.isOpenCreateFrom = true;
 	}
 }
