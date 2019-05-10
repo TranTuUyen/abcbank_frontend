@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.row-flex {
+    display: flex;
+  }
+  
+.row-flex-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.margin_top_40 {
+  margin-top: 40px
+}

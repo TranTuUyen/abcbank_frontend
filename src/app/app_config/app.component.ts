@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'abcbank-app';
+  title = 'materialApp';
+  checked = false;
+  indeterminate = false;
+  labelPosition = 'after';
+  disabled = false; 
 }
