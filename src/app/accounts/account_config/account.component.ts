@@ -6,6 +6,7 @@ import { Account } from 'src/app/model/account.model';
 import { AccountCreateComponent } from '../account_create/account.create.component';
 import { JWTService } from 'src/app/base/services/jwt_auth/jwt.service';
 import { CommonVariables } from '../../base/variables/common/common.variables'
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'account',
@@ -22,7 +23,14 @@ export class AccountComponent {
 	dataSource: MatTableDataSource<Account>;
 	displayedColumns: string[] = ['account_number', 'firstname', 'lastname', 'balance', 'email', 'age', 'gender', 'employer', 'address', 'city', 'state'];
 
-	// Paging
+	// Filter
+	filterValues = {
+		account_number: '',
+		firstname: ''
+	}
+
+	accountNumberFilter = new FormControl('');
+	firstNameFilter = new FormControl('');
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	constructor(
@@ -43,13 +51,43 @@ export class AccountComponent {
 		this.accountService.getAccounts()
 			.subscribe((res: Account[]) => {
 				this.dataSource = new MatTableDataSource(res);
+				this.dataSource.filterPredicate = this.createFilter();
 				this.dataSource.paginator = this.paginator;
-				this.accountList = res
+				this.accountList = res;
+
+				// Setup filter event
+				// this.accountNumberFilter.valueChanges
+				// 	.subscribe(
+				// 		accountNumber => {
+				// 			this.filterValues.account_number = accountNumber;
+				// 			this.dataSource.filter = JSON.stringify(this.filterValues);
+				// 		}
+				// 	)
+				this.firstNameFilter.valueChanges
+					.subscribe(
+						firstName => {
+							this.filterValues.firstname = firstName;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
 			},
 				err => {
 					console.log(err)
 				}
 			);
+	}
+
+	createFilter(): (data: any, filter: string) => boolean {
+		let filterFunction = function (data, filter): boolean {
+			let searchTerms = JSON.parse(filter);
+			return data.firstname.toLowerCase().indexOf(searchTerms.firstname) !== -1
+			// data.account_number.toLowerCase().indexOf(searchTerms.account_number) !== -1
+			// && data.firstName.toLowerCase().indexOf(searchTerms.firstName) !== -1
+			// && data.lastname.toString().toLowerCase().indexOf(searchTerms.lastname) !== -1
+			// && data.balance.toLowerCase().indexOf(searchTerms.balance) !== -1
+			// && data.email.toLowerCase().indexOf(searchTerms.email) !== -1;
+		}
+		return filterFunction;
 	}
 
 	onViewAccount(row) {
