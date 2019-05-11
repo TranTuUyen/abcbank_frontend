@@ -1,0 +1,165 @@
+<form class="tp-form" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+  <h1 mat-dialog-title><strong>{{title}}</strong></h1>
+  <div mat-dialog-content>
+    <ng-container>
+      <p class="input-title">Account number</p>
+      <mat-form-field *ngIf="isAdmin">
+        <input matInput [(ngModel)]="newAccount.account_number" [formControl]="accountNumberFormControl"
+          (change)="onChangeAccountNumber()" type="number" name="account_number" required>
+        <mat-error *ngIf="accountNumberFormControl.hasError('required')">
+          Account number is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-error class="out-eror" *ngIf="accountNumberExisted!=''">{{accountNumberExisted}}</mat-error>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.account_number}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container>
+      <p class="input-title">First name</p>
+      <mat-form-field *ngIf="isAdmin">
+        <input matInput [(ngModel)]="newAccount.firstname" name="firstname" required>
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.firstname}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+
+    <ng-container>
+      <p class="input-title">Last name</p>
+      <mat-form-field *ngIf="isAdmin">
+        <input matInput [(ngModel)]="newAccount.lastname" name="lastname" required>
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.lastname}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container>
+      <p class="input-title">Email</p>
+      <mat-form-field *ngIf='isAdmin'>
+        <input matInput [formControl]="emailFormControl" (ngModelChange)="onEmailChanging($event)"
+          (change)="onEmailChange()" [(ngModel)]="newAccount.email" type="email" required name="email">
+        <mat-error *ngIf="emailFormControl.hasError('email') 
+        && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-error class="out-eror" *ngIf="emailExisted!=''">{{emailExisted}}</mat-error>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.email}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container  *ngIf="isAdmin && !isUpdate">
+      <p class="input-title">Password</p>
+      <mat-form-field>
+        <input matInput [(ngModel)]="newAccount.password" [formControl]="passwordFormControl" type="password" name="password" required>
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container>
+      <p class="input-title">Balance</p>
+      <mat-form-field *ngIf='isAdmin'>
+        <input matInput [(ngModel)]="newAccount.balance" name="balance" required>
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.balance}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <div class="form-inline">
+      <div class="age-container">
+        <p class="input-title">Age</p>
+        <mat-form-field *ngIf="isAdmin">
+          <input matInput [(ngModel)]="newAccount.age" (change)="onChangeAge()" type="number" name="age" min=0
+            [formControl]="ageControl">
+          <mat-error *ngIf="ageControl.hasError('max')">
+            Age less than 150
+          </mat-error>
+          <mat-error *ngIf="ageControl.hasError('min')">
+            Age starts from 0
+          </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+          <div class="mat-form-field-flex">
+            <div class="mat-form-field-infix">
+              <p class="mat-input-element">
+                {{newAccount.age}}</p>
+            </div>
+            <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dob-container" *ngIf="isAdmin">
+        <p class="input-title">Select date of birth</p>
+        <mat-form-field>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [(ngModel)]='initDate'
+            (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)"
+            (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)" name="dob">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="align-right">
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button *ngIf="isAdmin" mat-raised-button color="primary" cdkFocusInitial type="submit">Ok</button>
+  </div>
+
+
+</form>

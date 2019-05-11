@@ -1,0 +1,36 @@
+mat-form-field {
+  width: 100%;
+}
+.input-title {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.form-inline {
+  display: flex;
+}
+.age-container {
+  flex: 1
+
+}
+.dob-container {
+  width: 60%;
+  margin-left: 20px
+}
+.mat-form-field-infix, .mat-input-element {
+  margin: 0;
+  border: none
+}
+.mat-form-field-underline {
+  height: 1px; 
+  background-color: rgba(0,0,0,.42);
+}
+
+.align-right {
+  justify-content: flex-end
+}
+ 
+.out-eror {
+  margin-top: -15px;
+  font-size: 75%;
+}

@@ -52,7 +52,7 @@ export class LoginComponent {
 					error => {
 						this.errorMsg = CommonVariables.LOGIN_ERROR
 						if (error.status === CommonVariables.STATUS_CODE_400) {
-							let message = error._body;
+							let message: string = error.error.message;
 							switch (message) {
 								case CommonVariables.ACCOUNT_NOT_EXIST:
 									this.errorMsg = CommonVariables.ACCOUNT_NOT_EXIST
