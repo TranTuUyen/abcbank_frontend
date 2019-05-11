@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatSort, MatTable, MatTableDataSource, Sort } from '@angular/material';
 import { AccountService } from './../../services/account.service';
@@ -22,6 +22,9 @@ export class AccountComponent {
 	dataSource: MatTableDataSource<Account>;
 	displayedColumns: string[] = ['account_number', 'firstname', 'lastname', 'balance', 'email', 'age', 'gender', 'employer', 'address', 'city', 'state'];
 
+	// Paging
+
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 	constructor(
 		private accountService: AccountService,
 		public jvtservice: JWTService,
@@ -39,7 +42,8 @@ export class AccountComponent {
 	ngOnInit() {
 		this.accountService.getAccounts()
 			.subscribe((res: Account[]) => {
-				this.dataSource = new MatTableDataSource(res)
+				this.dataSource = new MatTableDataSource(res);
+				this.dataSource.paginator = this.paginator;
 				this.accountList = res
 			},
 				err => {
@@ -85,7 +89,8 @@ export class AccountComponent {
 	}
 
 	onRemoveAccount(row, index: number) {
-		let accountId = row._id.$oid
+		let accountId = row._id.$oid;
+		event.stopPropagation();
 		this.accountService.removeAccount(accountId)
 			.subscribe(res => {
 				const data = this.dataSource.data;

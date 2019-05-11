@@ -16,7 +16,9 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatDatepickerModule, 
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatSelectModule,
+  MatPaginatorModule
 } from '@angular/material';
 import {ToastrModule} from 'ngx-toastr'
 import { AppRoutingModule } from './app-routing.module';
@@ -50,12 +52,14 @@ import { MonthPickerComponent } from '../accounts/moth__picker/month.picker.comp
     MatInputModule,
     MatCheckboxModule,
     MatTableModule,
+    MatPaginatorModule,
     MatSortModule,
     MatTooltipModule,
     MatIconModule,
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule,
     AppRoutingModule,
     ToastrModule.forRoot()
 

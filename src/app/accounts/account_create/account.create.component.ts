@@ -27,8 +27,8 @@ export class AccountCreateComponent implements OnInit {
 	newAccount: any = {};
 	dobformctrl: FormControl;
 	initDate: Date;
-	emailExisted: string = '';
-	accountNumberExisted: string = '';
+	emailExisted: boolean;
+	accountNumberExisted: boolean;
 	oldAccount: Account;
 	minDate: Date;
 	maxDate: Date;
@@ -46,6 +46,10 @@ export class AccountCreateComponent implements OnInit {
 
 	passwordFormControl = new FormControl('',[
 		Validators.required,
+	])
+
+	balanceFormControl = new FormControl("", [
+		Validators.min(0)
 	])
 
 	constructor(private accountService: AccountService,
@@ -95,7 +99,7 @@ export class AccountCreateComponent implements OnInit {
 	}
 
 	onEmailChange() {
-		this.emailExisted = ''
+		this.emailExisted = false
 		if (!this.emailFormControl.hasError('required') && !this.emailFormControl.hasError('email') && (!this.data || (this.data.email != this.newAccount.email))) {
 			this.accountService.checkEmail(this.newAccount.email)
 				.subscribe(response => {
@@ -103,22 +107,21 @@ export class AccountCreateComponent implements OnInit {
 				},
 					error => {
 						if (error.status === CommonVariables.STATUS_CODE_409) {
-							this.emailExisted = CommonVariables.EMAIL_EXISTED;
-							console.log(this.emailExisted)
+							this.emailExisted = true
 						}
 					})
 		}
 	}
 
 	onChangeAccountNumber() {
-		this.accountNumberExisted = ''
+		this.accountNumberExisted = false
 		if (!this.accountNumberFormControl.hasError('required') && (!this.data || (this.data.account_number != this.newAccount.account_number))) {
 			this.accountService.checkAccountNumber(this.newAccount.account_number)
 				.subscribe(response => {
 				},
 					error => {
 						if (error.status === CommonVariables.STATUS_CODE_409) {
-							this.accountNumberExisted = CommonVariables.ACCOUNT_NUMBER_EXISTED;
+							this.accountNumberExisted = true
 						}
 					})
 		}
@@ -127,7 +130,6 @@ export class AccountCreateComponent implements OnInit {
 	onChangeAge() {
 
 		if (this.newAccount.age <= 150 && this.newAccount.age > 0) {
-			console.log("abc")
 			let birthDate = moment().subtract(this.newAccount.age, 'years').subtract(0, 'months').subtract(0, 'days').format('DD-MM-YYYY');
 			this.initDate = new Date(birthDate);
 		}
@@ -145,6 +147,11 @@ export class AccountCreateComponent implements OnInit {
 			&& !this.ageControl.hasError("max")
 			&& !this.emailFormControl.hasError('email')
 			&& !this.emailFormControl.hasError('required')
+			&& !this.passwordFormControl.hasError('required')
+			&& !this.accountNumberFormControl.hasError('required')
+			&& !this.balanceFormControl.hasError('min')
+			&& !this.emailExisted
+			&& !this.accountNumberExisted
 		) {
 			if (this.isUpdate) {
 				this.accountService.updateAccount(this.newAccount)

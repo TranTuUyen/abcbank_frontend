@@ -1,6 +1,8 @@
 <form class="tp-form" (ngSubmit)="onSubmit()" #loginForm="ngForm">
   <h1 mat-dialog-title><strong>{{title}}</strong></h1>
   <div mat-dialog-content>
+
+    <!-- Account number control -->
     <ng-container>
       <p class="input-title">Account number</p>
       <mat-form-field *ngIf="isAdmin">
@@ -10,7 +12,7 @@
           Account number is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-error class="out-eror" *ngIf="accountNumberExisted!=''">{{accountNumberExisted}}</mat-error>
+      <mat-error class="out-eror" *ngIf="accountNumberExisted">Account existed</mat-error>
 
       <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
         <div class="mat-form-field-flex">
@@ -24,6 +26,7 @@
       </div>
     </ng-container>
 
+    <!-- First name control -->
     <ng-container>
       <p class="input-title">First name</p>
       <mat-form-field *ngIf="isAdmin">
@@ -43,6 +46,7 @@
 
     </ng-container>
 
+    <!-- Last name control -->
     <ng-container>
       <p class="input-title">Last name</p>
       <mat-form-field *ngIf="isAdmin">
@@ -61,6 +65,7 @@
       </div>
     </ng-container>
 
+    <!-- Email control -->
     <ng-container>
       <p class="input-title">Email</p>
       <mat-form-field *ngIf='isAdmin'>
@@ -75,7 +80,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-error class="out-eror" *ngIf="emailExisted!=''">{{emailExisted}}</mat-error>
+      <mat-error class="out-eror" *ngIf="emailExisted">Email existed</mat-error>
 
       <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
         <div class="mat-form-field-flex">
@@ -89,20 +94,26 @@
       </div>
     </ng-container>
 
-    <ng-container  *ngIf="isAdmin && !isUpdate">
+    <!-- Password control -->
+    <ng-container *ngIf="isAdmin && !isUpdate">
       <p class="input-title">Password</p>
       <mat-form-field>
-        <input matInput [(ngModel)]="newAccount.password" [formControl]="passwordFormControl" type="password" name="password" required>
+        <input matInput [(ngModel)]="newAccount.password" [formControl]="passwordFormControl" type="password"
+          name="password" required>
         <mat-error *ngIf="passwordFormControl.hasError('required')">
           Password is <strong>required</strong>
         </mat-error>
       </mat-form-field>
     </ng-container>
 
+    <!-- Balance control -->
     <ng-container>
       <p class="input-title">Balance</p>
       <mat-form-field *ngIf='isAdmin'>
-        <input matInput [(ngModel)]="newAccount.balance" name="balance" required>
+        <input matInput [(ngModel)]="newAccount.balance"  [formControl]="balanceFormControl" type="number" name="balance" required>
+        <mat-error *ngIf="balanceFormControl.hasError('min')">
+           Balance must be greater  or equal 0
+          </mat-error>
       </mat-form-field>
 
       <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
@@ -117,7 +128,7 @@
       </div>
     </ng-container>
 
-
+    <!-- Age Control -->
     <div class="form-inline">
       <div class="age-container">
         <p class="input-title">Age</p>
@@ -155,6 +166,126 @@
         </mat-form-field>
       </div>
     </div>
+
+    <!-- Gender control -->
+    <ng-container>
+      <p class="input-title">Gender</p>
+      <mat-form-field *ngIf="isAdmin">
+        <mat-select [(value)]="newAccount.gender">
+          <mat-option value="M">Male</mat-option>
+          <mat-option value="F">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.gender}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Address control -->
+    <ng-container>
+      <p class="input-title">State</p>
+      <mat-form-field *ngIf='isAdmin'>
+        <input matInput [(ngModel)]="newAccount.address" name="state">
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.address}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- City control -->
+    <ng-container>
+      <p class="input-title">City</p>
+      <mat-form-field *ngIf='isAdmin'>
+        <input matInput [(ngModel)]="newAccount.city" name="city">
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.city}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Address control -->
+    <ng-container>
+      <p class="input-title">Address</p>
+      <mat-form-field *ngIf='isAdmin'>
+        <input matInput [(ngModel)]="newAccount.address" name="address">
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.address}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Emploer control -->
+    <ng-container>
+      <p class="input-title">Employer</p>
+      <mat-form-field *ngIf='isAdmin'>
+        <input matInput [(ngModel)]="newAccount.employer" name="employer">
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.employer}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Role control -->
+    <ng-container>
+      <p class="input-title">Role</p>
+      <mat-form-field *ngIf="isAdmin">
+        <mat-select [(value)]="newAccount.role">
+          <mat-option value="Admin">Admin</mat-option>
+          <mat-option value="Normal">Normal</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
+        <div class="mat-form-field-flex">
+          <div class="mat-form-field-infix">
+            <p class="mat-input-element">
+              {{newAccount.role}}</p>
+          </div>
+          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
   <div mat-dialog-actions class="align-right">
     <button mat-button (click)="onNoClick()">Close</button>
