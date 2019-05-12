@@ -31,7 +31,6 @@ import { AccountService } from '../services/account.service'
 import { AuthGuard } from '../_guards/guards';
 import { JwtInterceptor } from '../base/services/jwt_auth/jwt.interceptor';
 import { AccountCreateComponent } from '../accounts/account_create/account.create.component';
-import { MonthPickerComponent } from '../accounts/moth__picker/month.picker.component';
 import { NavbarComponent } from '../accounts/header/navbar.component';
 import { PageComponent } from '../accounts/page/page.component';
 
@@ -43,7 +42,6 @@ import { PageComponent } from '../accounts/page/page.component';
     LoginComponent,
     AccountComponent,
     AccountCreateComponent,
-    MonthPickerComponent
   ],
   imports: [
     BrowserModule,

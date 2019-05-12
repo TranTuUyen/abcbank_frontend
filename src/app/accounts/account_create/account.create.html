@@ -192,18 +192,18 @@
       </div>
     </ng-container>
 
-    <!-- Address control -->
+    <!-- State control -->
     <ng-container>
       <p class="input-title">State</p>
       <mat-form-field *ngIf='isAdmin'>
-        <input matInput [(ngModel)]="newAccount.address" name="state">
+        <input matInput [(ngModel)]="newAccount.state" name="state">
       </mat-form-field>
 
       <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
         <div class="mat-form-field-flex">
           <div class="mat-form-field-infix">
             <p class="mat-input-element">
-              {{newAccount.address}}</p>
+              {{newAccount.state}}</p>
           </div>
           <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
           </div>

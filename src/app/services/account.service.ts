@@ -24,7 +24,7 @@ export class AccountService {
         let cloneAccount = Object.assign({}, account)
         let accountId = account._id.$oid;
         delete cloneAccount._id;
-        return this.http.post(AccountAPIs.ACCOUNT_BASE + `/${accountId}`, cloneAccount)
+        return this.http.put(AccountAPIs.ACCOUNT_BASE + `/${accountId}`, cloneAccount)
     }
 
     public checkEmail(email):  Observable<any> {

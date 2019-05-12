@@ -182,7 +182,7 @@ export class AccountComponent {
 
 	allFilter(): (data: Account, filter: string) => boolean {
 		let filterFunction = function (data: Account, filter: string): boolean {
-			let searchTerms = filter;
+			let searchTerms = filter.toLowerCase();
 			return data.account_number.toString().indexOf(searchTerms) !== -1
 				|| data.balance.toString().indexOf(searchTerms) !== -1
 				|| data.firstname.toLowerCase().indexOf(searchTerms) !== -1
