@@ -163,7 +163,6 @@
         <p class="input-title">Select date of birth</p>
         <mat-form-field>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [(ngModel)]='initDate'
-            (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)"
             (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)" name="dob">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>

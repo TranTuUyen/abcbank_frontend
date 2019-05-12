@@ -1,18 +1,19 @@
 .account-header {
-    display: flex;
-    align-items: center;
-    
-    .mat-form-field {
-        width: 100%;
-    }
+  display: flex;
+  align-items: center;
+
+  .mat-form-field {
+    width: 100%;
+  }
 }
 
 .search-form {
-    flex: 1;
+  flex: 1;
+  display: flex;
 }
 
 .add-button {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 table {
@@ -31,4 +32,21 @@ table {
 .table-container {
   display: flex;
   overflow-x: scroll;
+}
+
+.filter-ralative {
+  position: relative;
+}
+.age-control {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 15px;
+  left: 0;
+  z-index: 1;
+  height: 10px;
+  margin-top: 6px;
+}
+.age-input-date {
+    visibility: hidden;;
 }

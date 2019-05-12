@@ -1,12 +1,14 @@
 import { Component, ViewChild } from '@angular/core'
+import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatSort, MatTable, MatTableDataSource, Sort } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatSort, MatTable, MatTableDataSource, Sort, MatDatepickerInputEvent } from '@angular/material';
 import { AccountService } from './../../services/account.service';
 import { Account } from 'src/app/model/account.model';
 import { AccountCreateComponent } from '../account_create/account.create.component';
 import { JWTService } from 'src/app/base/services/jwt_auth/jwt.service';
 import { CommonVariables } from '../../base/variables/common/common.variables'
-import { FormControl } from '@angular/forms';
+
 
 @Component({
 	selector: 'account',
@@ -21,11 +23,12 @@ export class AccountComponent {
 	selectedAccount: Account;
 	accountList: Account[] = [];
 	dataSource: MatTableDataSource<Account>;
+	isAdvanceSearch: boolean = false;
 	displayedColumns: string[] = ['account_number', 'firstname', 'lastname', 'balance', 'email', 'age', 'gender', 'employer', 'address', 'city', 'state'];
 
 	// Filter
 	allFilterValue = "";
-	filterValues: any = {
+	advanceFilterValues: any = {
 		_id: '',
 		account_number: '',
 		balance: '',
@@ -56,6 +59,8 @@ export class AccountComponent {
 	employerFilter = new FormControl('');
 	emailFilter = new FormControl('');
 
+	initDate: Date; 
+
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	constructor(
 		private accountService: AccountService,
@@ -68,7 +73,8 @@ export class AccountComponent {
 		if (this.loggedAccount.role == CommonVariables.ADMIN) {
 			this.isAdmin = true;
 			this.displayedColumns.push("remove");
-		}
+		};
+		this.initDate = new Date();
 	}
 
 	ngOnInit() {
@@ -81,87 +87,89 @@ export class AccountComponent {
 
 				// Setup filter event
 				this.allFieldFilter.valueChanges
-				.subscribe(
-					text => {
-						this.allFilterValue = text;
-						this.dataSource.filter = this.allFilterValue;
-					}
-				)
+					.subscribe(
+						text => {
+							this.allFilterValue = text;
+							this.dataSource.filter = this.allFilterValue;
+						}
+					)
 				this.accountNumberFilter.valueChanges
 					.subscribe(
 						accountNumber => {
-							this.filterValues.account_number = accountNumber;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.account_number = accountNumber;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.balanceFilter.valueChanges
 					.subscribe(
 						balance => {
-							this.filterValues.balance = balance;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.balance = balance;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.firstNameFilter.valueChanges
 					.subscribe(
 						firstName => {
-							this.filterValues.firstname = firstName;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.firstname = firstName;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.lastNameFilter.valueChanges
 					.subscribe(
 						lastname => {
-							this.filterValues.lastname = lastname;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.lastname = lastname;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.ageFilter.valueChanges
 					.subscribe(
 						age => {
-							this.filterValues.age = age;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.age = age;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
+							let birthDate = moment().subtract(age, 'years').subtract(0, 'months').subtract(0, 'days').format('DD-MM-YYYY');
+							this.initDate = new Date(birthDate);
 						}
 					)
 				this.genderFilter.valueChanges
 					.subscribe(
 						gender => {
-							this.filterValues.gender = gender;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.gender = gender;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.addressFilter.valueChanges
 					.subscribe(
 						address => {
-							this.filterValues.address = address;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.address = address;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.cityFilter.valueChanges
 					.subscribe(
 						city => {
-							this.filterValues.city = city;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.city = city;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.stateFilter.valueChanges
 					.subscribe(
 						state => {
-							this.filterValues.state = state;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.state = state;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.employerFilter.valueChanges
 					.subscribe(
 						employer => {
-							this.filterValues.employer = employer;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.employer = employer;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 				this.emailFilter.valueChanges
 					.subscribe(
 						email => {
-							this.filterValues.email = email;
-							this.dataSource.filter = JSON.stringify(this.filterValues);
+							this.advanceFilterValues.email = email;
+							this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 						}
 					)
 
@@ -206,6 +214,16 @@ export class AccountComponent {
 				&& data.email.toLowerCase().indexOf(searchTerms.email) !== -1;
 		}
 		return filterFunction;
+	}
+
+	onToggleAdvanceSearch() {
+		this.isAdvanceSearch = !this.isAdvanceSearch;
+		if (this.isAdvanceSearch) {
+			this.dataSource.filterPredicate = this.advanceFilter();
+		}
+		else {
+			this.dataSource.filterPredicate = this.allFilter();
+		}
 	}
 
 	onViewAccount(row) {
@@ -257,6 +275,14 @@ export class AccountComponent {
 				error => {
 					this.showError("Remove failed")
 				})
+	}
+
+	addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+		let date = event.value;
+		let timeDiff = Math.abs(Date.now() - date.getTime());
+		let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
+		this.advanceFilterValues.age = age;
+		this.dataSource.filter = JSON.stringify(this.advanceFilterValues);
 	}
 
 	showSuccess(message: string) {

@@ -1,0 +1,23 @@
+
+.nav-bar {
+  background: #3f51b5;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center
+}
+.logo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  height: 50px;
+}
+
+.logout-link {
+  color: #fff;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: none
+  }
+}

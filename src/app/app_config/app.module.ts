@@ -15,12 +15,12 @@ import {
   MatIconModule,
   MatTooltipModule,
   MatDialogModule,
-  MatDatepickerModule, 
+  MatDatepickerModule,
   MatNativeDateModule,
   MatSelectModule,
   MatPaginatorModule
 } from '@angular/material';
-import {ToastrModule} from 'ngx-toastr'
+import { ToastrModule } from 'ngx-toastr'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from '../authentication/login/login.component'
@@ -32,10 +32,14 @@ import { AuthGuard } from '../_guards/guards';
 import { JwtInterceptor } from '../base/services/jwt_auth/jwt.interceptor';
 import { AccountCreateComponent } from '../accounts/account_create/account.create.component';
 import { MonthPickerComponent } from '../accounts/moth__picker/month.picker.component';
+import { NavbarComponent } from '../accounts/header/navbar.component';
+import { PageComponent } from '../accounts/page/page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PageComponent,
+    NavbarComponent,
     LoginComponent,
     AccountComponent,
     AccountCreateComponent,
@@ -67,7 +71,7 @@ import { MonthPickerComponent } from '../accounts/moth__picker/month.picker.comp
   providers: [
     HttpModule,
     HttpClientModule,
-    MatDatepickerModule, 
+    MatDatepickerModule,
     JWTService,
     LoginService,
     AuthGuard,

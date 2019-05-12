@@ -1,6 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "../node_modules/ngx-toastr/toastr.css";
+body {
+  margin: 0;
+}
+h1 {
+  margin: 0;
+}
+.float-right {
+  float: right;
+}
 .row-flex {
     display: flex;
   }
