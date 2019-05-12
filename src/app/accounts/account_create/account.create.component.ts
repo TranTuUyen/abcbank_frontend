@@ -49,6 +49,7 @@ export class AccountCreateComponent implements OnInit {
 	])
 
 	balanceFormControl = new FormControl("", [
+		Validators.required,
 		Validators.min(0)
 	])
 
@@ -149,6 +150,7 @@ export class AccountCreateComponent implements OnInit {
 			&& !this.emailFormControl.hasError('required')
 			&& !this.passwordFormControl.hasError('required')
 			&& !this.accountNumberFormControl.hasError('required')
+			&& !this.balanceFormControl.hasError('required')
 			&& !this.balanceFormControl.hasError('min')
 			&& !this.emailExisted
 			&& !this.accountNumberExisted

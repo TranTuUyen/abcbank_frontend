@@ -24,13 +24,37 @@ export class AccountComponent {
 	displayedColumns: string[] = ['account_number', 'firstname', 'lastname', 'balance', 'email', 'age', 'gender', 'employer', 'address', 'city', 'state'];
 
 	// Filter
-	filterValues = {
+	allFilterValue = "";
+	filterValues: any = {
+		_id: '',
 		account_number: '',
-		firstname: ''
+		balance: '',
+		firstname: '',
+		lastname: '',
+		age: '',
+		gender: '',
+		address: '',
+		city: '',
+		state: '',
+		employer: '',
+		email: '',
+		password: '',
+		role: '',
 	}
 
+	allFieldFilter = new FormControl('')
+
 	accountNumberFilter = new FormControl('');
+	balanceFilter = new FormControl('');
 	firstNameFilter = new FormControl('');
+	lastNameFilter = new FormControl('');
+	ageFilter = new FormControl('');
+	genderFilter = new FormControl('');
+	addressFilter = new FormControl('');
+	cityFilter = new FormControl('');
+	stateFilter = new FormControl('');
+	employerFilter = new FormControl('');
+	emailFilter = new FormControl('');
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	constructor(
@@ -51,18 +75,32 @@ export class AccountComponent {
 		this.accountService.getAccounts()
 			.subscribe((res: Account[]) => {
 				this.dataSource = new MatTableDataSource(res);
-				this.dataSource.filterPredicate = this.createFilter();
+				this.dataSource.filterPredicate = this.allFilter();
 				this.dataSource.paginator = this.paginator;
 				this.accountList = res;
 
 				// Setup filter event
-				// this.accountNumberFilter.valueChanges
-				// 	.subscribe(
-				// 		accountNumber => {
-				// 			this.filterValues.account_number = accountNumber;
-				// 			this.dataSource.filter = JSON.stringify(this.filterValues);
-				// 		}
-				// 	)
+				this.allFieldFilter.valueChanges
+				.subscribe(
+					text => {
+						this.allFilterValue = text;
+						this.dataSource.filter = this.allFilterValue;
+					}
+				)
+				this.accountNumberFilter.valueChanges
+					.subscribe(
+						accountNumber => {
+							this.filterValues.account_number = accountNumber;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+				this.balanceFilter.valueChanges
+					.subscribe(
+						balance => {
+							this.filterValues.balance = balance;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
 				this.firstNameFilter.valueChanges
 					.subscribe(
 						firstName => {
@@ -70,6 +108,63 @@ export class AccountComponent {
 							this.dataSource.filter = JSON.stringify(this.filterValues);
 						}
 					)
+				this.lastNameFilter.valueChanges
+					.subscribe(
+						lastname => {
+							this.filterValues.lastname = lastname;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+				this.ageFilter.valueChanges
+					.subscribe(
+						age => {
+							this.filterValues.age = age;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+				this.genderFilter.valueChanges
+					.subscribe(
+						gender => {
+							this.filterValues.gender = gender;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+				this.addressFilter.valueChanges
+					.subscribe(
+						address => {
+							this.filterValues.address = address;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+				this.cityFilter.valueChanges
+					.subscribe(
+						city => {
+							this.filterValues.city = city;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+				this.stateFilter.valueChanges
+					.subscribe(
+						state => {
+							this.filterValues.state = state;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+				this.employerFilter.valueChanges
+					.subscribe(
+						employer => {
+							this.filterValues.employer = employer;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+				this.emailFilter.valueChanges
+					.subscribe(
+						email => {
+							this.filterValues.email = email;
+							this.dataSource.filter = JSON.stringify(this.filterValues);
+						}
+					)
+
 			},
 				err => {
 					console.log(err)
@@ -77,15 +172,38 @@ export class AccountComponent {
 			);
 	}
 
-	createFilter(): (data: any, filter: string) => boolean {
-		let filterFunction = function (data, filter): boolean {
+	allFilter(): (data: Account, filter: string) => boolean {
+		let filterFunction = function (data: Account, filter: string): boolean {
+			let searchTerms = filter;
+			return data.account_number.toString().indexOf(searchTerms) !== -1
+				|| data.balance.toString().indexOf(searchTerms) !== -1
+				|| data.firstname.toLowerCase().indexOf(searchTerms) !== -1
+				|| data.lastname.toString().toLowerCase().indexOf(searchTerms) !== -1
+				|| (data.age && data.age.toString().indexOf(searchTerms) !== -1)
+				|| (data.gender && data.gender.toLowerCase().indexOf(searchTerms) !== -1)
+				|| (data.address && data.address.toLowerCase().indexOf(searchTerms) !== -1)
+				|| (data.city && data.city.toLowerCase().indexOf(searchTerms) !== -1)
+				|| (data.state && data.address.toLowerCase().indexOf(searchTerms) !== -1)
+				|| (data.employer && data.employer.toLowerCase().indexOf(searchTerms) !== -1)
+				|| data.email.toLowerCase().indexOf(searchTerms) !== -1;
+		}
+		return filterFunction;
+	}
+
+	advanceFilter(): (data: Account, filter: string) => boolean {
+		let filterFunction = function (data: Account, filter: string): boolean {
 			let searchTerms = JSON.parse(filter);
-			return data.firstname.toLowerCase().indexOf(searchTerms.firstname) !== -1
-			// data.account_number.toLowerCase().indexOf(searchTerms.account_number) !== -1
-			// && data.firstName.toLowerCase().indexOf(searchTerms.firstName) !== -1
-			// && data.lastname.toString().toLowerCase().indexOf(searchTerms.lastname) !== -1
-			// && data.balance.toLowerCase().indexOf(searchTerms.balance) !== -1
-			// && data.email.toLowerCase().indexOf(searchTerms.email) !== -1;
+			return data.account_number.toString().indexOf(searchTerms.account_number) !== -1
+				&& data.balance.toString().indexOf(searchTerms.balance) !== -1
+				&& data.firstname.toLowerCase().indexOf(searchTerms.firstname.toLowerCase()) !== -1
+				&& data.lastname.toString().toLowerCase().indexOf(searchTerms.lastname.toLowerCase()) !== -1
+				&& (data.age && data.age.toString().indexOf(searchTerms.age) !== -1)
+				&& (data.gender && data.gender.toLowerCase().indexOf(searchTerms.gender.toLowerCase()) !== -1)
+				&& (data.address && data.address.toLowerCase().indexOf(searchTerms.address.toLowerCase()) !== -1)
+				&& (data.city && data.city.toLowerCase().indexOf(searchTerms.city.toLowerCase()) !== -1)
+				&& (data.state && data.address.toLowerCase().indexOf(searchTerms.state.toLowerCase()) !== -1)
+				&& (data.employer && data.employer.toLowerCase().indexOf(searchTerms.employer.toLowerCase()) !== -1)
+				&& data.email.toLowerCase().indexOf(searchTerms.email) !== -1;
 		}
 		return filterFunction;
 	}

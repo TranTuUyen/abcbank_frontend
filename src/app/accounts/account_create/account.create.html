@@ -110,10 +110,14 @@
     <ng-container>
       <p class="input-title">Balance</p>
       <mat-form-field *ngIf='isAdmin'>
-        <input matInput [(ngModel)]="newAccount.balance"  [formControl]="balanceFormControl" type="number" name="balance" required>
-        <mat-error *ngIf="balanceFormControl.hasError('min')">
-           Balance must be greater  or equal 0
-          </mat-error>
+        <input matInput [(ngModel)]="newAccount.balance" [formControl]="balanceFormControl" type="number" name="balance"
+          required>
+        <mat-error *ngIf="balanceFormControl.hasError('min') && !balanceFormControl.hasError('required') ">
+          Balance must be greater or equal 0
+        </mat-error>
+        <mat-error *ngIf="balanceFormControl.hasError('required')">
+          Balance must be greater or equal 0
+        </mat-error>
       </mat-form-field>
 
       <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
