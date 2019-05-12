@@ -70,7 +70,7 @@
       <p class="input-title">Email</p>
       <mat-form-field *ngIf='isAdmin'>
         <input matInput [formControl]="emailFormControl" (ngModelChange)="onEmailChanging($event)"
-          (change)="onEmailChange()" [(ngModel)]="newAccount.email" type="email" required name="email">
+          (change)="onEmailChange()" [(ngModel)]="newAccount.email" type="email" required name="email" autocomplete="off">
         <mat-error *ngIf="emailFormControl.hasError('email') 
         && !emailFormControl.hasError('required')">
           Please enter a valid email address
@@ -98,7 +98,7 @@
     <ng-container *ngIf="isAdmin && !isUpdate">
       <p class="input-title">Password</p>
       <mat-form-field>
-        <input matInput [(ngModel)]="newAccount.password" [formControl]="passwordFormControl" type="password"
+        <input matInput [(ngModel)]="newAccount.password" [formControl]="passwordFormControl" type="password"  autocomplete="off"
           name="password" required>
         <mat-error *ngIf="passwordFormControl.hasError('required')">
           Password is <strong>required</strong>
@@ -261,28 +261,6 @@
           <div class="mat-form-field-infix">
             <p class="mat-input-element">
               {{newAccount.employer}}</p>
-          </div>
-          <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-
-    <!-- Role control -->
-    <ng-container>
-      <p class="input-title">Role</p>
-      <mat-form-field *ngIf="isAdmin">
-        <mat-select [(value)]="newAccount.role">
-          <mat-option value="Admin">Admin</mat-option>
-          <mat-option value="Normal">Normal</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <div *ngIf="!isAdmin" class="mat-form-field-wrapper">
-        <div class="mat-form-field-flex">
-          <div class="mat-form-field-infix">
-            <p class="mat-input-element">
-              {{newAccount.role}}</p>
           </div>
           <div class="mat-form-field-underline"><span class="mat-form-field-ripple"></span>
           </div>

@@ -1,5 +1,5 @@
 export class Account {
-    _id: string;
+    _id: object;
     account_number: number;
     balance: number;
     firstname: string;
@@ -11,8 +11,6 @@ export class Account {
     state: string;
     employer: string;
     email: string;
-    password: string;
-    role: string;
 
     constructor() { }
 }

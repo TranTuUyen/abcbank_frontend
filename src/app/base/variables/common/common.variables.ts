@@ -1,8 +1,8 @@
 
 export class CommonVariables {
     // ROLE
-    public static ADMIN = 'normal'
-    public static NORMAL = 'normal'
+    public static ADMIN = 'Admin'
+    public static NORMAL = 'Normal'
 
     // ERROR CODE
     public static STATUS_CODE_400 = 400

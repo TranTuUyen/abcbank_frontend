@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'page-root',
-  templateUrl: './page.html',
-  styleUrls: ['./page.scss']
+  selector: 'mainapp-root',
+  templateUrl: './mainapp.html',
+  styleUrls: ['./mainapp.scss']
 })
 export class PageComponent {
     logo=""

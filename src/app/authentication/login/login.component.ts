@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { FormControl, Validators } from "@angular/forms";
 
-import { LoginService } from './login.service'
+import { AuthService } from '../../services/auth.service'
 import { Router } from '@angular/router'
 import { CommonVariables } from '../../base/variables/common/common.variables'
 import { JWTService } from '../../base/services/jwt_auth/jwt.service'
@@ -30,7 +30,7 @@ export class LoginComponent {
 		Validators.required,
 	]);
 
-	constructor(private loginService: LoginService,
+	constructor(private authService: AuthService,
 		private jwtService: JWTService,
 		private router: Router) { }
 
@@ -41,7 +41,7 @@ export class LoginComponent {
 	public onLogin() {
 		this.hasError = false
 		if (this.checkLogin()) {
-			this.loginService
+			this.authService
 				.login(this.userInfo)
 				.subscribe(
 					response => {

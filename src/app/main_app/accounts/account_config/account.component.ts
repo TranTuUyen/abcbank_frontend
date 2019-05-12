@@ -3,11 +3,12 @@ import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatSort, MatTable, MatTableDataSource, Sort, MatDatepickerInputEvent } from '@angular/material';
-import { AccountService } from './../../services/account.service';
+import { AccountService } from '../../../services/account.service';
 import { Account } from 'src/app/model/account.model';
 import { AccountCreateComponent } from '../account_create/account.create.component';
 import { JWTService } from 'src/app/base/services/jwt_auth/jwt.service';
-import { CommonVariables } from '../../base/variables/common/common.variables'
+import { CommonVariables } from '../../../base/variables/common/common.variables'
+import { User } from 'src/app/model/user.model';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { CommonVariables } from '../../base/variables/common/common.variables'
 })
 
 export class AccountComponent {
-	loggedAccount: Account;
+	loggedAccount: User;
 	isAdmin: boolean = false;
 	selectedAccount: Account;
 	accountList: Account[] = [];

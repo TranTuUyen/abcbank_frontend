@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http';
 import { JWTAuthVariable } from '../../variables/jwt_auth/auth.variables'
 import { Account } from 'src/app/model/account.model';
+import { User } from 'src/app/model/user.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Injectable()
@@ -21,7 +23,7 @@ export class JWTService {
         localStorage.removeItem(JWTAuthVariable.ACCESS_TOKEN);
     }
 
-    saveUserInfo(userInfo: Account) {
+    saveUserInfo(userInfo: User) {
         localStorage.setItem('USER_INFO', JSON.stringify(userInfo))
     }
 
@@ -29,7 +31,12 @@ export class JWTService {
         localStorage.removeItem('USER_INFO');
     }
 
-    getUserInfo(): Account {
+    getUserInfo(): User {
         return JSON.parse(localStorage.getItem('USER_INFO'))
     }
+
+    // public isExpired(): boolean {
+    //     const token = this.getAccessToken();
+    //     return this.jwtHelper.isTokenExpired(token)
+    //   }
 }

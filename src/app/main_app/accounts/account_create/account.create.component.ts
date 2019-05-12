@@ -2,13 +2,14 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 
-import { AccountService } from '../../services/account.service';
+import { AccountService } from '../../../services/account.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { JWTService } from 'src/app/base/services/jwt_auth/jwt.service';
 import * as moment from 'moment';
 import { CommonVariables } from 'src/app/base/variables';
 import { Account } from 'src/app/model/account.model';
 import { ToastrService } from 'ngx-toastr';
+import { User } from 'src/app/model/user.model';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AccountCreateComponent implements OnInit {
 	title: string;
 	isUpdate: boolean;
-	loggedAccount: Account;
+	loggedAccount: User;
 	isAdmin: boolean;
 	newAccount: any = {};
 	dobformctrl: FormControl;
