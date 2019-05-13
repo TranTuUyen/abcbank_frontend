@@ -65,7 +65,12 @@ export class AccountCreateComponent implements OnInit {
 			this.newAccount = new Account();
 		}
 		else {
-			this.title = "Update account";
+			if(this.isAdmin) {
+				this.title = "Update account";
+			}
+			else {
+				this.title = "Account details";
+			}
 			this.isUpdate = true;
 			this.newAccount = Object.assign({}, data);
 		}

@@ -7,7 +7,13 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 100%
+  height: 100%;
+
+	background: linear-gradient(-45deg, rgb(219, 156, 136), rgb(187, 85, 201), rgb(83, 169, 201), rgb(37, 180, 147));
+	background-size: 400% 400%;
+	-webkit-animation: Gradient 15s ease infinite;
+	-moz-animation: Gradient 15s ease infinite;
+	animation: Gradient 15s ease infinite;
 }
 .middle {
   display: table-cell;
@@ -15,9 +21,19 @@
 }
 .tp-form {
   min-width: 150px;
-  max-width: 500px;
+  max-width: 400px;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
+  padding: 40px 35px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.login-title {
+  font-size: 30px;
+  text-align: center;
+  color: #3f51b5;
+  margin-top: 0;
 }
 
 .tp-full-width {
@@ -31,4 +47,41 @@
 
 .button-submit {
   margin-top: 30px;
+  padding: 0 80px;
+}
+
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
 }

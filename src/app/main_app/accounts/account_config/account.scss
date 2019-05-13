@@ -10,6 +10,10 @@
 .search-form {
   flex: 1;
   display: flex;
+
+  .mat-icon-button {
+    margin-bottom: 1.25em;
+  }
 }
 
 .add-button {
@@ -26,9 +30,11 @@ table {
 .filter {
   display: block;
 }
+
 .header {
   padding: 14px 5px 5px;
 }
+
 .table-container {
   display: flex;
   overflow-x: scroll;
@@ -44,9 +50,9 @@ table {
   right: 15px;
   left: 0;
   z-index: 1;
-  height: 10px;
-  margin-top: 6px;
+  height: 18px;
+  margin-top: 5px;
 }
 .age-input-date {
-    visibility: hidden;;
+  visibility: hidden;
 }

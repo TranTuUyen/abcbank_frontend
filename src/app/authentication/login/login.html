@@ -2,6 +2,7 @@
 <div class="form-wrapper">
   <div class="middle">
     <form class="tp-form" (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <h2 class="login-title">Login</h2>
       <mat-form-field class="tp-full-width">
         <input matInput placeholder="Email" [formControl]="emailFormControl" [(ngModel)]="userInfo.email"
           (change)="onEmailChange($event)" type="email" id="email" name="email" required>
